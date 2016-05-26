@@ -21,4 +21,9 @@ public class FirstFragment extends BaseFragment{
     protected int getLayoutId() {
         return R.layout.fragment_first;
     }
+
+    @Override
+    public void onClick(View v) {
+
+    }
 }

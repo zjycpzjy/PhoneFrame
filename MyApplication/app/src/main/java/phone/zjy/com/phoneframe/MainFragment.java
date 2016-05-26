@@ -1,5 +1,6 @@
 package phone.zjy.com.phoneframe;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,9 +16,13 @@ public class MainFragment extends BaseFragment{
     Button mainBtn;
     @Bind(R.id.btn_back)
     Button backBtn;
+
+
+
     public static MainFragment newInstance(){
         return new MainFragment();
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_main;
@@ -44,4 +49,6 @@ public class MainFragment extends BaseFragment{
                 break;
         }
     }
+
+
 }
