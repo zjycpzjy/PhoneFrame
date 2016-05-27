@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import phoneframe.Permission.PermissionsChecker;
 /**
  * Created by zhangjiaying on 16/5/26.
  */
-public abstract class AppActivity extends BaseActivity{
+public abstract class AppActivity extends BaseActivity implements View.OnClickListener{
 
     public static final int PERMISSIONS_GRANTED = 0; // 权限授权
     public static final int PERMISSIONS_DENIED = 1; // 权限拒绝

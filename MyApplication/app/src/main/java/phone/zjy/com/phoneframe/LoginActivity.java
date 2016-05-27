@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 /**
  * Created by zhangjiaying on 16/5/26.
@@ -67,4 +68,8 @@ public class LoginActivity extends AppActivity{
         return PERMISSIONS;
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }

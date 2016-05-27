@@ -13,7 +13,16 @@
     tools:showIn="@layout/app_bar_main">
 
     <TextView
+        android:id="@+id/tv_base"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:padding="10dp"
+        android:text="BaseActivity和BaseFragment基本封装" />
+    <TextView
+        android:id="@+id/tv_permission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_base"
+        android:padding="10dp"
+        android:text="Android6.0运行时权限" />
 </RelativeLayout>

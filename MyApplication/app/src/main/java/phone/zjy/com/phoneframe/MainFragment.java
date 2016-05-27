@@ -18,7 +18,6 @@ public class MainFragment extends BaseFragment{
     Button backBtn;
 
 
-
     public static MainFragment newInstance(){
         return new MainFragment();
     }
