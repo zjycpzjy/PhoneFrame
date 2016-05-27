@@ -1,17 +1,20 @@
-package phone.zjy.com.phoneframe;
+package phone.zjy.com.phoneframe.main;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import butterknife.Bind;
+import phone.zjy.com.phoneframe.login.LoginActivity;
+import phone.zjy.com.phoneframe.R;
+import phone.zjy.com.phoneframe.login.SecondFragment;
+import phone.zjy.com.phoneframe.base.BaseFragment;
 
 /**
  * Created by zhangjiaying on 16/5/26.
  */
-public class MainFragment extends BaseFragment{
+public class MainFragment extends BaseFragment {
     @Bind(R.id.btn_login)
     Button mainBtn;
     @Bind(R.id.btn_back)

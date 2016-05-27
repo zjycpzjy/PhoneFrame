@@ -1,4 +1,4 @@
-package phone.zjy.com.phoneframe;
+package phone.zjy.com.phoneframe.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,11 +7,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import butterknife.Bind;
+import phone.zjy.com.phoneframe.R;
+import phone.zjy.com.phoneframe.base.BaseFragment;
 
 /**
  * Created by zhangjiaying on 16/5/26.
  */
-public class FirstFragment extends BaseFragment{
+public class FirstFragment extends BaseFragment {
     private static String name;
     private static String FIRSTTAG = "firstTag";
     @Bind(R.id.et_username)

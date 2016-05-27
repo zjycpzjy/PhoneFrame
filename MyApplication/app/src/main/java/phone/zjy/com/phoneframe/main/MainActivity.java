@@ -1,4 +1,4 @@
-package phone.zjy.com.phoneframe;
+package phone.zjy.com.phoneframe.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,15 +9,17 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import butterknife.Bind;
+import phone.zjy.com.phoneframe.login.LoginActivity;
+import phone.zjy.com.phoneframe.R;
+import phone.zjy.com.phoneframe.base.AppActivity;
+import phone.zjy.com.phoneframe.base.BaseFragment;
+import phone.zjy.com.phoneframe.permission.PermissionCheckActivity;
 
 public class MainActivity extends AppActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,11 +47,11 @@ public class MainActivity extends AppActivity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void setUpView(View view) {
         setSupportActionBar(toolbar);
         tv_base.setOnClickListener(this);
         fab.setOnClickListener(this);
+        tv_permission.setOnClickListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -128,7 +130,8 @@ public class MainActivity extends AppActivity
                         .setAction("Action", null).show();
                 break;
             case R.id.tv_permission:
-                
+                Intent intentPermission = new Intent(this,PermissionCheckActivity.class);
+                startActivity(intentPermission);
                 break;
         }
     }

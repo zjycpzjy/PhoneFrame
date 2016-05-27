@@ -1,4 +1,4 @@
-package phone.zjy.com.phoneframe;
+package phone.zjy.com.phoneframe.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import butterknife.Bind;
+import phone.zjy.com.phoneframe.R;
+import phone.zjy.com.phoneframe.base.BaseFragment;
 
 /**
  * Created by zhangjiaying on 16/5/26.

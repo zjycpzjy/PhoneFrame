@@ -1,4 +1,4 @@
-package phone.zjy.com.phoneframe;
+package phone.zjy.com.phoneframe.base;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import phoneframe.Permission.PermissionsChecker;
+import phone.zjy.com.phoneframe.R;
+import phone.zjy.com.phoneframe.permission.PermissionsChecker;
 
 /**
  * Created by zhangjiaying on 16/5/26.
@@ -54,12 +55,17 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getContentViewId());
-        ButterKnife.bind(this);
+
         if(null != getIntent()){
             handleIntent(getIntent());
         }
 
+        if (getContentViewId() > 0) {
+            View view = View.inflate(this, getContentViewId(), null);
+            setContentView(view);
+            ButterKnife.bind(this);
+            setUpView(view);
+        }
         //避免重复添加 fragment
         if(null == getSupportFragmentManager().getFragments()){
            BaseFragment firstFragment = getFirstFragment();
@@ -68,11 +74,8 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
             }
         }
 
-        mChecker = new PermissionsChecker(this);
-        isRequireCheck = true;
-
     }
-
+    protected abstract void setUpView(View view);
     @Override
     protected int getContentViewId() {
         return R.layout.activity_base;
@@ -86,27 +89,31 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
 
     @Override protected void onResume() {
         super.onResume();
+
+    }
+
+    public void toCheckPermission(String ... str) {
+        mChecker = new PermissionsChecker(this);
+        isRequireCheck = true;
         if (isRequireCheck) {
-            final String[] permissions = getPermissions();
-            List<String> permissionList = mChecker.lacksPermissions(permissions);
+            final String[] permissions =str;
+           final List<String> permissionList = mChecker.lacksPermissions(permissions);
             if (permissionList != null && permissionList.size() > 0){
                 Log.e("在activity里面检测",permissionList.size()+"");
                 //在请求requestPermissions前，我们需要检查是否需要展示请求权限的提示通过activity的shouldShowRequestPermissionRationale
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this,permissionList.get(0))) {
+                        showMessageOKCancel("You need to allow access to Contacts",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        requestPermissions(permissionList); // 请求权限
+//
+                                    }
+                                });
+                        return;
+                    }
+                requestPermissions(permissionList); // 请求权限
 
-//                for(String permission :permissionList){
-//                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this,permission)) {
-                        requestPermissions(permissionList); // 请求权限
-
-    //                    showMessageOKCancel("You need to allow access to Contacts",
-    //                            new DialogInterface.OnClickListener() {
-    //                                @Override
-    //                                public void onClick(DialogInterface dialog, int which) {
-    //                                    ActivityCompat.requestPermissions(PermissionsActivity.this,permissions,
-    //                                            PERMISSION_REQUEST_CODE);
-    //                                }
-    //                            });
-//                    }
-//                }
             } else {
 //                allPermissionsGranted(); // 全部权限都已获取
             }
@@ -114,7 +121,6 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
             isRequireCheck = true;
         }
     }
-
 
 
     // 请求权限兼容低版本

@@ -1,4 +1,4 @@
-package phoneframe.Permission;
+package phone.zjy.com.phoneframe.permission;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -47,7 +47,6 @@ public class PermissionsChecker {
             e.printStackTrace();
         }
 
-//        Log.e("获取的数据",ContextCompat.checkSelfPermission(mContext, permission)+"");
         Log.e("AS设置的targetSdkVersion:",targetSdkVersion+"");
         Log.e("设备的系统版本:",Build.VERSION.SDK_INT+"");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
