@@ -25,4 +25,11 @@
         android:layout_below="@+id/tv_base"
         android:padding="10dp"
         android:text="Android6.0运行时权限" />
+    <TextView
+        android:id="@+id/tv_customerview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_permission"
+        android:padding="10dp"
+        android:text="自定义View和viewGroup" />
 </RelativeLayout>

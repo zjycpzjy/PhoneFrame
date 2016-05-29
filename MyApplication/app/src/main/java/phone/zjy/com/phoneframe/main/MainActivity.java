@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import butterknife.Bind;
+import phone.zjy.com.phoneframe.customerview.CustomerViewActivity;
 import phone.zjy.com.phoneframe.login.LoginActivity;
 import phone.zjy.com.phoneframe.R;
 import phone.zjy.com.phoneframe.base.AppActivity;
@@ -36,6 +37,8 @@ public class MainActivity extends AppActivity
     TextView tv_base;
     @Bind(R.id.tv_permission)
     TextView tv_permission;
+    @Bind(R.id.tv_customerview)
+    TextView tv_customerview;
     @Override
     protected BaseFragment getFirstFragment() {
         return null;
@@ -52,6 +55,7 @@ public class MainActivity extends AppActivity
         tv_base.setOnClickListener(this);
         fab.setOnClickListener(this);
         tv_permission.setOnClickListener(this);
+        tv_customerview.setOnClickListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -132,6 +136,10 @@ public class MainActivity extends AppActivity
             case R.id.tv_permission:
                 Intent intentPermission = new Intent(this,PermissionCheckActivity.class);
                 startActivity(intentPermission);
+                break;
+            case R.id.tv_customerview:
+                Intent intentView = new Intent(this,CustomerViewActivity.class);
+                startActivity(intentView);
                 break;
         }
     }
