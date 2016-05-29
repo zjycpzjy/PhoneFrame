@@ -1,27 +1,21 @@
-package phone.zjy.com.phoneframe;
+package phone.zjy.com.phoneframe.login;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.view.View;
+
+import phone.zjy.com.phoneframe.base.AppActivity;
+import phone.zjy.com.phoneframe.base.BaseFragment;
+import phone.zjy.com.phoneframe.login.FirstFragment;
 
 /**
  * Created by zhangjiaying on 16/5/26.
  */
-public class LoginActivity extends AppActivity{
+public class LoginActivity extends AppActivity {
     private String userName;
     private static final int REQUEST_CODE = 0; // 请求码
 
-    // 所需的全部权限
-    static final String[] PERMISSIONS = new String[]{
-            Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-    };
 
-//    static final String[] PERMISSIONS = new String[]{
-//                Manifest.permission.RECORD_AUDIO
-//    };
 
     @Override
     protected BaseFragment getFirstFragment() {
@@ -37,6 +31,10 @@ public class LoginActivity extends AppActivity{
         }
     }
 
+    @Override
+    protected void setUpView(View view) {
+
+    }
 
     @Override
     protected int getContentViewId() {
@@ -63,8 +61,7 @@ public class LoginActivity extends AppActivity{
 
 
     @Override
-    protected String[] getPermissions(String... str) {
-        return PERMISSIONS;
-    }
+    public void onClick(View v) {
 
+    }
 }
