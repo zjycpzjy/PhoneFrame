@@ -1,4 +1,3 @@
-
 ##  BaseActivity和BaseFragment的基本封装
      
 ## Android6.0运行时 权限适配
@@ -23,7 +22,5 @@
           3. 华为note8 手机可以正常运行
 ## 自定义ViewGroup和View
       1. 自定义TOPBAR
-  
-
   
 
