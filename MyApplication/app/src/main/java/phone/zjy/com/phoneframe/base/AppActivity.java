@@ -68,7 +68,7 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
         }
         //避免重复添加 fragment
         if(null == getSupportFragmentManager().getFragments()){
-           BaseFragment firstFragment = getFirstFragment();
+            BaseFragment firstFragment = getFirstFragment();
             if(null != firstFragment){
                 addFragment(firstFragment);
             }
@@ -97,21 +97,21 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
         isRequireCheck = true;
         if (isRequireCheck) {
             final String[] permissions =str;
-           final List<String> permissionList = mChecker.lacksPermissions(permissions);
+            final List<String> permissionList = mChecker.lacksPermissions(permissions);
             if (permissionList != null && permissionList.size() > 0){
                 Log.e("在activity里面检测",permissionList.size()+"");
                 //在请求requestPermissions前，我们需要检查是否需要展示请求权限的提示通过activity的shouldShowRequestPermissionRationale
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this,permissionList.get(0))) {
-                        showMessageOKCancel("You need to allow access to Contacts",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        requestPermissions(permissionList); // 请求权限
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this,permissionList.get(0))) {
+                    showMessageOKCancel("You need to allow access to Contacts",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    requestPermissions(permissionList); // 请求权限
 //
-                                    }
-                                });
-                        return;
-                    }
+                                }
+                            });
+                    return;
+                }
                 requestPermissions(permissionList); // 请求权限
 
             } else {
