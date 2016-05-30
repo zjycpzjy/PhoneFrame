@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:topbar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <phone.zjy.com.phoneframe.customerview.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+
+        topbar:titleName="标题"
+        topbar:titleColor="@android:color/black"
+        topbar:titleSize="15.0sp"
+        topbar:titleBackground="@android:color/holo_red_light"
+
+        topbar:leftName="左按钮"
+        topbar:leftColor="@android:color/white"
+        topbar:leftSize="8.0sp"
+        topbar:leftBackground="@android:color/holo_green_light"  
+        
+        topbar:rightName="右按钮"
+        topbar:rightColor="@android:color/white"
+        topbar:rightSize="8.0sp"
+        topbar:rightBackground="@android:color/holo_green_light"
+        >
+
+        
+        
+
+    </phone.zjy.com.phoneframe.customerview.TopBar>
+</RelativeLayout>
