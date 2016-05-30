@@ -18,9 +18,7 @@ import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.ButterKnife;
 import phone.zjy.com.phoneframe.R;
@@ -35,6 +33,8 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
     public static final int PERMISSIONS_DENIED = 1; // 权限拒绝
     final private int SDK_PERMISSION_REQUEST = 122;
     private static final int PERMISSION_REQUEST_CODE = 0; // 系统权限管理页面的参数
+    private static final String EXTRA_PERMISSIONS =
+            "me.chunyu.clwang.permission.extra_permission"; // 权限参数
     private static final String PACKAGE_URL_SCHEME = "package:"; // 方案
 
     private PermissionsChecker mChecker; // 权限检测器
@@ -46,9 +46,6 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
 
     //获取intent
     protected void handleIntent(Intent intent){};
-
-    //走 请求权限返回的 结果，在子类写业务流程
-    protected void handleResult(){};
 
     // 返回传递的权限参数
     protected String[] getPermissions(String ... str) {
@@ -71,7 +68,7 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
         }
         //避免重复添加 fragment
         if(null == getSupportFragmentManager().getFragments()){
-           BaseFragment firstFragment = getFirstFragment();
+            BaseFragment firstFragment = getFirstFragment();
             if(null != firstFragment){
                 addFragment(firstFragment);
             }
@@ -100,21 +97,21 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
         isRequireCheck = true;
         if (isRequireCheck) {
             final String[] permissions =str;
-           final List<String> permissionList = mChecker.lacksPermissions(permissions);
+            final List<String> permissionList = mChecker.lacksPermissions(permissions);
             if (permissionList != null && permissionList.size() > 0){
                 Log.e("在activity里面检测",permissionList.size()+"");
                 //在请求requestPermissions前，我们需要检查是否需要展示请求权限的提示通过activity的shouldShowRequestPermissionRationale
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this,permissionList.get(0))) {
-                        showMessageOKCancel("You need to allow access to Contacts",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        requestPermissions(permissionList); // 请求权限
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this,permissionList.get(0))) {
+                    showMessageOKCancel("You need to allow access to Contacts",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    requestPermissions(permissionList); // 请求权限
 //
-                                    }
-                                });
-                        return;
-                    }
+                                }
+                            });
+                    return;
+                }
                 requestPermissions(permissionList); // 请求权限
 
             } else {
@@ -128,8 +125,7 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
 
     // 请求权限兼容低版本
     private void requestPermissions(List<String> permissions) {
-        getPersimmions(permissions);
-//        ActivityCompat.requestPermissions(this, permissions.toArray(new String[permissions.size()]), PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, permissions.toArray(new String[permissions.size()]), PERMISSION_REQUEST_CODE);
     }
 
 //    // 全部权限均已获取
@@ -155,9 +151,7 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
         if (requestCode == PERMISSION_REQUEST_CODE){
             if(hasAllPermissionsGranted(grantResults)) {
                 isRequireCheck = true;
-                handleResult();
 //                allPermissionsGranted();  走业务逻辑
-                //需要写回调  在 子acrivity  进行特殊处理
             } else {
                 for( int i = 0; i < permissions.length; i++ ) {
                     if( grantResults[i] == PackageManager.PERMISSION_GRANTED ) {
@@ -226,26 +220,25 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    /**
-     *  notise: requestPermissions 这个方法如果单独使用 需要设置最低的编译版本  是 23
-     */
+
+
     @TargetApi(23)
-    public void getPersimmions(List<String> permissions) {
+    public void getPersimmions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            ArrayList<String> permissions = new ArrayList<String>();
+            ArrayList<String> permissions = new ArrayList<String>();
             /***
              * 定位权限为必须权限，用户如果禁止，则每次进入都会申请
              */
             // 定位精确位置
-//            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
-//            }
-//            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-//            }
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            }
 
             if (permissions.size() > 0) {
-                requestPermissions(permissions.toArray(new String[permissions.size()]), PERMISSION_REQUEST_CODE);
+                requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
                 return;
             }
         }
@@ -261,18 +254,16 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
 //                // Initial
 //                perms.put(Manifest.permission.ACCESS_FINE_LOCATION, PackageManager.PERMISSION_GRANTED);
 //                // Fill with results
-//                for (int i = 0; i < permissions.length; i++){
+//                for (int i = 0; i < permissions.length; i++)
 //                    perms.put(permissions[i], grantResults[i]);
-//                    // Check for ACCESS_FINE_LOCATION
-//                    if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//                        // All Permissions Granted
+//                // Check for ACCESS_FINE_LOCATION
+//                if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+//                    // All Permissions Granted
 //
-//                    } else {
-//                        // Permission Denied
-////                    Toast.showToast(this, "需要手动设置定位权限");
-//                    }
+//                } else {
+//                    // Permission Denied
+//                    Toast.showToast(this, "需要手动设置定位权限");
 //                }
-//
 //                break;
 //            default:
 //                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
