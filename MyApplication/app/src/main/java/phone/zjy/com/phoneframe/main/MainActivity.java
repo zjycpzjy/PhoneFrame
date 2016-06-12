@@ -1,7 +1,6 @@
 package phone.zjy.com.phoneframe.main;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -16,7 +15,7 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import phone.zjy.com.phoneframe.customerview.CustomerViewActivity;
-import phone.zjy.com.phoneframe.login.LoginActivity;
+import phone.zjy.com.phoneframe.login.view.LoginActivity;
 import phone.zjy.com.phoneframe.R;
 import phone.zjy.com.phoneframe.base.AppActivity;
 import phone.zjy.com.phoneframe.base.BaseFragment;

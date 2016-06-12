@@ -101,11 +101,11 @@ public class PermissionCheckActivity extends AppActivity{
         }
     }
 
-    @Override
-    protected void handleResult() {
-        super.handleResult();
-        locationMethod();
-    }
+//    @Override
+//    protected void handleResult() {
+//        super.handleResult();
+//        locationMethod();
+//    }
 
 
     public void locationMethod(){

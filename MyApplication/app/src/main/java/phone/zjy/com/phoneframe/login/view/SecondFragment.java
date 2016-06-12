@@ -1,4 +1,4 @@
-package phone.zjy.com.phoneframe.login;
+package phone.zjy.com.phoneframe.login.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

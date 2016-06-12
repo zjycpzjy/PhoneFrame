@@ -1,4 +1,4 @@
-package phone.zjy.com.phoneframe.login;
+package phone.zjy.com.phoneframe.login.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.view.View;
 
 import phone.zjy.com.phoneframe.base.AppActivity;
 import phone.zjy.com.phoneframe.base.BaseFragment;
-import phone.zjy.com.phoneframe.login.FirstFragment;
+import phone.zjy.com.phoneframe.login.view.FirstFragment;
 
 /**
  * Created by zhangjiaying on 16/5/26.
@@ -64,4 +64,8 @@ public class LoginActivity extends AppActivity {
     public void onClick(View v) {
 
     }
+
+
+
+
 }
