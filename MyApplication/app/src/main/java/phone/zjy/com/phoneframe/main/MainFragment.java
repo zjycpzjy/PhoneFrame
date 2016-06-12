@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.Button;
 
 import butterknife.Bind;
-import phone.zjy.com.phoneframe.login.LoginActivity;
+import phone.zjy.com.phoneframe.login.view.LoginActivity;
 import phone.zjy.com.phoneframe.R;
-import phone.zjy.com.phoneframe.login.SecondFragment;
+import phone.zjy.com.phoneframe.login.view.SecondFragment;
 import phone.zjy.com.phoneframe.base.BaseFragment;
 
 /**

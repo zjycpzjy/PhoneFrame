@@ -1,19 +1,23 @@
-package phone.zjy.com.phoneframe.login;
+package phone.zjy.com.phoneframe.login.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import phone.zjy.com.phoneframe.R;
 import phone.zjy.com.phoneframe.base.BaseFragment;
+import phone.zjy.com.phoneframe.login.model.User;
+import phone.zjy.com.phoneframe.login.presenter.UserLoginPresenter;
 
 /**
  * Created by zhangjiaying on 16/5/26.
  */
-public class FirstFragment extends BaseFragment {
+public class FirstFragment extends BaseFragment implements IUserLoginView{
     private static String name;
     private static String FIRSTTAG = "firstTag";
     @Bind(R.id.et_username)
@@ -26,6 +30,10 @@ public class FirstFragment extends BaseFragment {
     TextView regist;
     @Bind(R.id.tv_forget)
     TextView forget;
+    @Bind(R.id.progress)
+    ProgressBar progress;
+   private UserLoginPresenter userLoginPresenter;
+
 
     public static FirstFragment newInstance(String name){
         FirstFragment firstFragment = new FirstFragment();
@@ -41,7 +49,7 @@ public class FirstFragment extends BaseFragment {
         if(getArguments() != null){
             name = getArguments().getString(FIRSTTAG);
         }
-
+        userLoginPresenter = new UserLoginPresenter(getActivity(),this);
     }
 
     @Override
@@ -62,7 +70,7 @@ public class FirstFragment extends BaseFragment {
     public void onClick(View v) {
          switch (v.getId()){
              case R.id.tv_confirm:
-                 addFragment(new SecondFragment().newInstance("确认登录跳转"));
+                 userLoginPresenter.login();
                  break;
              case R.id.tv_regist:
                  addFragment(new SecondFragment().newInstance("登录跳转需要注册"));
@@ -72,4 +80,46 @@ public class FirstFragment extends BaseFragment {
                  break;
          }
     }
+
+    @Override
+    public String getUserName() {
+        return username.getText().toString().trim();
+    }
+
+    @Override
+    public String getPassword() {
+        return secret.getText().toString().trim();
+    }
+
+    @Override
+    public void showFailedError(String error) {
+        Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void toMainActivity(User user) {
+        addFragment(new SecondFragment().newInstance("确认登录跳转"+user.getUserName()));
+    }
+
+    @Override
+    public void hideLoading() {
+        progress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showLoading() {
+        progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void clearPassword() {
+        secret.setText("");
+    }
+
+    @Override
+    public void clearUserName() {
+        username.setText("");
+    }
+
+
 }
