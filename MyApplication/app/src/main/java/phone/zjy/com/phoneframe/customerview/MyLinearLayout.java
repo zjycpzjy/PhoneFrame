@@ -5,7 +5,9 @@ import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.LinearLayout;
 
 /**
@@ -13,8 +15,11 @@ import android.widget.LinearLayout;
  */
 public class MyLinearLayout extends LinearLayout{
     ViewDragHelper  mViewDragHelper;
+    VelocityTracker mVelocityTracker;
+    ViewConfiguration viewConfiguration;
     public MyLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        viewConfiguration= ViewConfiguration.get(context);
         initViewDragHelper();
     }
 
@@ -46,6 +51,9 @@ public class MyLinearLayout extends LinearLayout{
                 }else{
                     child.setAlpha(1.0f);
                 }
+
+
+
                 if (left < leftBound) {
                     fixedLeft = leftBound;
                 } else if (left > rightBound) {
@@ -53,6 +61,7 @@ public class MyLinearLayout extends LinearLayout{
                 } else {
                     fixedLeft = left;
                 }
+//获取touchSlop。该值表示系统所能识别出的被认为是滑动的最小距离
                 return fixedLeft;
             }
 
@@ -97,6 +106,7 @@ public class MyLinearLayout extends LinearLayout{
             @Override
             public void onViewReleased(View releasedChild, float xvel, float yvel) {
                 super.onViewReleased(releasedChild, xvel, yvel);
+                stopVelocityTracker();
                 System.out.println("ViewReleased");
             }
         });
@@ -109,7 +119,32 @@ public class MyLinearLayout extends LinearLayout{
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        startVelocityTracker(event);
         mViewDragHelper.processTouchEvent(event);
         return true;
+    }
+
+    private void startVelocityTracker(MotionEvent event) {
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+        mVelocityTracker.addMovement(event);
+    }
+
+    private int getScrollVelocity() {
+        // 设置VelocityTracker单位.1000表示1秒时间内运动的像素
+        mVelocityTracker.computeCurrentVelocity(1000);
+        // 获取在1秒内X方向所滑动像素值
+        int xVelocity = (int) mVelocityTracker.getXVelocity();
+        Log.e("滑动像素值",xVelocity+"");
+        return Math.abs(xVelocity);
+    }
+
+    private void stopVelocityTracker() {
+        if (mVelocityTracker != null) {
+            mVelocityTracker.recycle();
+            mVelocityTracker = null;
+        }
     }
 }
