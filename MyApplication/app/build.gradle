@@ -4,12 +4,64 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+
+    // API环境
+    def apiEnvironment = API_ENVIRONMENT ? API_ENVIRONMENT : project.API_ENVIRONMENT
+    // 修改mui项目中的API环境配置
+//    appFile = new File("assets/apps/H537C8863/www/js/conf.js")
+//    source = appFile.getText()
+//    appFile.withPrintWriter { printWriter ->
+//        printWriter.println('var apiEnvironment = "' + apiEnvironment + '";')
+//    }
+//    appFile.append(source, "UTF-8")
+
+    productFlavors {
+        if (apiEnvironment == "RELEASE") {
+            official {}
+            baidu {}
+            _360 {}
+            xiaomi {}
+            huawei {}
+            _91 {}
+            appchina {}
+            anzhi {}
+            aliapp {}
+            qq {}
+            google {}
+            oppo {}
+        } else if (apiEnvironment == "PRO") {
+            official {}
+        } else {
+            dev {}
+        }
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+
+
     defaultConfig {
         applicationId "phone.zjy.com.phoneframe"
-        minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion project.ANDROID_TARGET_SDK_VERSION as int
+        versionCode project.VERSION_CODE as int
+        versionName project.VERSION_NAME
+        minSdkVersion project.ANDROID_BUILD_MIN_SDK_VERSION as int
+
+        //配置各种key
+        switch (apiEnvironment) {
+            case "DEV":
+            case "TEST":
+            case "PRE":
+
+                break
+            case "PRO":
+
+                break
+            case "RELEASE":
+
+                break
+        }
     }
     buildTypes {
         release {
