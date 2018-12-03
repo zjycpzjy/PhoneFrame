@@ -22,6 +22,11 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+    allprojects {
+        repositories {
+            google()
+        }
+    }
 }
 
 dependencies {
